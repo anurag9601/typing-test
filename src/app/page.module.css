@@ -1,0 +1,47 @@
+.homeContainer{
+    margin: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: "Nunito", sans-serif;
+}
+
+.wordsContainer{
+    display: flex;
+    flex-wrap: wrap;
+    line-height: 5vh;
+    width: 50vw;
+    height: 20vh;
+    overflow: hidden;
+    font-size: 28px;
+    gap: 10px;
+    font-weight: 600;
+    color: #6c757d
+}
+
+.timeOption{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 10px;
+    gap: 30px;
+    box-shadow: 0px 0px 10px #6c757d;
+    margin-bottom: 30px;
+}
+
+.timeOption div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    font-size: 18px;
+    color: #6c757d;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.timeOption div:hover{
+    color: #ced4da
+}

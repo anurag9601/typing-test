@@ -1,0 +1,47 @@
+.navbarContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logoContainer{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "Nunito", sans-serif;
+    color: #dee2e6;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.logo{
+    width: 70px;
+    height: 70px; 
+}
+
+.moreOptions{
+    display: flex;
+    align-items: center;
+    gap: 5vw;
+}
+
+.navOption{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.option{
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    opacity: .7;
+    transition: .2s;
+}
+
+.option:hover{
+    opacity: 1;
+    transition: .2s;
+}
