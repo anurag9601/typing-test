@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    animation: blink 1.2s;
 }
 
 .logoContainer{
@@ -10,13 +11,13 @@
     gap: 10px;
     font-family: "Nunito", sans-serif;
     color: #dee2e6;
-    font-size: 15px;
+    font-size: 20px;
     cursor: pointer;
 }
 
 .logo{
-    width: 70px;
-    height: 70px; 
+    width: 60px;
+    height: 60px; 
 }
 
 .moreOptions{
@@ -44,4 +45,13 @@
 .option:hover{
     opacity: 1;
     transition: .2s;
+}
+
+@keyframes blink{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
 }

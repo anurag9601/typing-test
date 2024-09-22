@@ -1,0 +1,20 @@
+.right{
+    color: #dee2e6;
+}
+
+.wrong{
+    color: #d00000;
+}
+
+.blink{
+    animation: blink 1.5s;
+}
+
+@keyframes blink{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
