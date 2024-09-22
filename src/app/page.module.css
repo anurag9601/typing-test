@@ -11,23 +11,26 @@
 .wordsMainContainer{
     position: relative;
     width: 60vw;
-    height: 28vh;
+    height: 180px;
     overflow: hidden;
+    padding: 2px;
 }
 
 .wordsContainer{
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    line-height: 8vh;
+    text-align: center;
+    line-height: 60px;
     width: 60vw;
-    height: 28vh;
+    height: 180px;
     font-size: 35px;
-    gap: 10px;
     font-weight: 600;
     color: #6c757d;
     animation: blink 1.5s;
     position: absolute;
+}
+
+.word{
+    display: inline-block;
+    margin: 0 5px;
 }
 
 .timeOption{
@@ -71,6 +74,20 @@
 .resetBtn:hover{
     color: #ced4da;
     transition: .2s;
+}
+
+.timeOption .setTime{
+    color: #ced4da;
+}
+
+.cursor{
+    height: 40px;
+    width: 3.5px;
+    border-radius: 5px;
+    /* background-color:#0077b6; */
+    background-color: #00b4d8;
+    position: absolute;
+    top: 10px;
 }
 
 @keyframes blink{
