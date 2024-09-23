@@ -88,7 +88,30 @@
     background-color: #00b4d8;
     position: absolute;
     top: 10px;
+    /* animation: cursorBlink 1s infinite; */
 }
+
+.timmer{
+    font-size: 50px;
+    margin-bottom: 25px;
+    font-weight: 800;
+    background: linear-gradient(130deg, #219ebc, #8ecae6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* @keyframes cursorBlink{
+    0%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+} */
 
 @keyframes blink{
     0%{

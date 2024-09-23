@@ -22,7 +22,7 @@ export const words: string[] = [
     "umbrella", "up", "unicorn", "utensil", "urn", "under", "unit", "urban", "utility", "unique",
     "vase", "van", "valley", "vowel", "viper", "vortex", "vision", "victory", "village", "vow",
     "whale", "window", "wolf", "wing", "whip", "wish", "water", "wool", "wallet", "wave",
-    "x-ray", "xylophone", "xenon", "xerox", "xenophobia", "xmas", "xenophile", "xenolith", "xylem", "xenogeneic",
+    "xray", "xylophone", "xenon", "xerox", "xenophobia", "xmas", "xenophile", "xenolith", "xylem", "xenogeneic",
     "yak", "yarn", "yacht", "yellow", "yogurt", "yoke", "yell", "year", "yes", "yawn",
     "zebra", "zoo", "zip", "zest", "zone", "zinc", "zodiac", "zoom", "zenith", "zany"
 ]
