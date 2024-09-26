@@ -1,0 +1,41 @@
+.notFoundContainer{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.notFoundBody{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 20px;
+}
+
+.notFoundBody .errorImage{
+    width: 70px;
+    height: 70px;
+}
+
+.notFoundBody h1{
+    font-family: "Coiny", system-ui;
+    background: linear-gradient(130deg, #e63946, #f1faee);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.goBackLink{
+    text-decoration: none;
+    font-family: "Nunito", sans-serif;
+    color: #e7d7c1;
+    font-size: 16px;
+}
+
+.goBackLink:hover{
+    text-decoration: underline;
+}

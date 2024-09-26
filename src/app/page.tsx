@@ -81,22 +81,22 @@ export default function Home() {
     }
   };
 
-  const handleRestart = async () => {
+  const handleRestart = () => {
     wordsAddcountState.current = 0;
     setState([]);
     setIsTyping(false);
     wordIndex.current = 0;
     letterIndex.current = 0;
-    await clearInterval(intervalRef.current);
+    clearInterval(intervalRef.current);
     intervalRef.current = undefined;
     window.gameStart = null;
     paragraphRef.current?.classList.add("blink");
-    await updateCursorPosition();
+    updateCursorPosition();
     mainParagraphRef.current!.style.top = "0px";
     paragraphRef.current?.classList.remove("over");
     mainParagraphRef.current?.classList.remove("gameover");
     cursorRef.current?.classList.remove("hide");
-    await setTimeout(() => {
+    setTimeout(() => {
       paragraphRef.current?.classList.remove("blink");
     }, 800);
   };
@@ -139,7 +139,7 @@ export default function Home() {
       updateCursorPosition();
 
       if (!intervalRef.current && isLetter) {
-        intervalRef.current = setInterval(() => {
+        intervalRef.current = setInterval(async () => {
           if (!window.gameStart) {
             window.gameStart = new Date().getTime();
           }
@@ -149,7 +149,7 @@ export default function Home() {
           const sLeft = (timeRef.current * 1000) / 1000 - sPassed - 1;
           timmerRef.current!.innerHTML = sLeft + "";
           if (sLeft == 0) {
-            handleGameOver();
+            await handleGameOver();
             return;
           }
         }, 1000);
