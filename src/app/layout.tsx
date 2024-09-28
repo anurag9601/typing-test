@@ -1,11 +1,9 @@
-import type { Metadata } from "next";
+"use client"
+
 import "./globals.css";
 import Navbar from "@/components/navbar/navbar";
-
-export const metadata: Metadata = {
-  title: "Typist",
-  description: "A typing test website",
-};
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 export default function RootLayout({
   children,
@@ -15,8 +13,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        {children}
+        <Provider store={store}>
+          <Navbar />
+          {children}
+        </Provider>
       </body>
     </html>
   );

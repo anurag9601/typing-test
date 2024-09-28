@@ -1,3 +1,5 @@
+"use client"
+
 import style from "./not-found.module.css"
 import error from "../assets/images/error-404.png"
 import Image from "next/image"

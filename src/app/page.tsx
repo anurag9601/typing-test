@@ -81,34 +81,35 @@ export default function Home() {
     }
   };
 
-  const handleRestart = () => {
+  const handleRestart = async () => {
     wordsAddcountState.current = 0;
     setState([]);
     setIsTyping(false);
     wordIndex.current = 0;
     letterIndex.current = 0;
-    clearInterval(intervalRef.current);
+    extraTypeLetter.current = 0;
+    await clearInterval(intervalRef.current!);
     intervalRef.current = undefined;
     window.gameStart = null;
-    paragraphRef.current?.classList.add("blink");
+    await paragraphRef.current?.classList.add("blink");
     updateCursorPosition();
     mainParagraphRef.current!.style.top = "0px";
-    paragraphRef.current?.classList.remove("over");
-    mainParagraphRef.current?.classList.remove("gameover");
-    cursorRef.current?.classList.remove("hide");
-    setTimeout(() => {
+    await paragraphRef.current?.classList.remove("over");
+    await mainParagraphRef.current?.classList.remove("gameover");
+    await cursorRef.current?.classList.remove("hide");
+    await setTimeout(() => {
       paragraphRef.current?.classList.remove("blink");
     }, 800);
   };
 
-  const handleGameOver = () => {
-    clearInterval(intervalRef.current);
+  const handleGameOver = async () => {
+    await clearInterval(intervalRef.current!);
     intervalRef.current = undefined;
     paragraphRef.current?.classList.add("over");
     mainParagraphRef.current?.classList.add("gameover");
     cursorRef.current?.classList.add("hide");
     timmerRef.current!.innerHTML = getWPS() + " Wpm";
-    return;
+    window.gameStart = null;
   };
 
   const generateParagraph = () => {
@@ -116,14 +117,13 @@ export default function Home() {
       const randomInt = Math.floor(Math.random() * words.length - 1) + 0;
       setState((prev: string[]) => [...prev, words[randomInt]]);
       wordsAddcountState.current += 1;
+      updateCursorPosition();
     }
+    updateCursorPosition();
   };
 
   useLayoutEffect(() => {
     generateParagraph();
-    if (state.length === 200) {
-      updateCursorPosition();
-    }
   }, [handleRestart]);
 
   useEffect(() => {
@@ -139,7 +139,7 @@ export default function Home() {
       updateCursorPosition();
 
       if (!intervalRef.current && isLetter) {
-        intervalRef.current = setInterval(async () => {
+        intervalRef.current = setInterval(() => {
           if (!window.gameStart) {
             window.gameStart = new Date().getTime();
           }
@@ -147,11 +147,11 @@ export default function Home() {
           const msPassed = currentTime - window.gameStart;
           const sPassed = Math.floor(msPassed / 1000);
           const sLeft = (timeRef.current * 1000) / 1000 - sPassed - 1;
-          timmerRef.current!.innerHTML = sLeft + "";
-          if (sLeft == 0) {
-            await handleGameOver();
+          if (sLeft <= 0) {
+            handleGameOver();
             return;
           }
+          timmerRef.current!.innerHTML = sLeft + "";
         }, 1000);
       }
 
@@ -159,6 +159,8 @@ export default function Home() {
         if (extraTypeLetter.current !== 0) {
           currentWordRef.current?.lastChild?.remove();
           extraTypeLetter.current -= 1;
+          currentWordLength.current! -= 1;
+          letterIndex.current -= 1;
           updateCursorPosition();
         } else {
           if (letterIndex.current == 0) return;
@@ -181,6 +183,7 @@ export default function Home() {
         currentWordRef.current = wordRef.current[wordIndex.current];
         currentWordLength.current =
           wordRef.current[wordIndex.current]?.children.length;
+
         if (currentWordRef.current!.getBoundingClientRect().top > 300) {
           const margin = parseInt(mainParagraphRef.current!.style.top || "0px");
           mainParagraphRef.current!.style.top = margin - 60 + "px";
@@ -214,6 +217,8 @@ export default function Home() {
             span.classList.add("extra");
             currentWordRef.current?.append(span);
             extraTypeLetter.current += 1;
+            currentWordLength.current += 1;
+            letterIndex.current += 1;
             updateCursorPosition();
           }
         }
@@ -235,7 +240,10 @@ export default function Home() {
 
   useEffect(() => {
     timeRef.current = time;
+    updateCursorPosition();
   }, [time]);
+
+  updateCursorPosition();
 
   return (
     <div className={style.homeContainer}>
