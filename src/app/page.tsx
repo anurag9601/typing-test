@@ -1,9 +1,18 @@
 "use client";
-import { useEffect, useRef, useState, useLayoutEffect } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useLayoutEffect,
+  useCallback,
+} from "react";
+import { io as ClientIo } from "socket.io-client";
 import { words } from "./_words/words";
 import style from "./page.module.css";
 import { GrPowerReset } from "react-icons/gr";
 import "./word.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsConnected, setSocket } from "./slice/socketSlice";
 
 export default function Home() {
   const [state, setState] = useState<string[]>([]);
@@ -28,7 +37,41 @@ export default function Home() {
   const cursorRef = useRef<HTMLDivElement | null>(null);
   const mainParagraphRef = useRef<HTMLDivElement | null>(null);
 
-  window.gameStart = null;
+  const gameStart = useRef<number | null>(null);
+
+  const dispatch = useDispatch();
+
+  const socket = useSelector((state: any) => state.socketInit.socket);
+
+  const socketInit = useCallback(async function () {
+    const socket = await new (ClientIo as any)(
+      process.env.NEXT_PUBLIC_SITE_URL,
+      {
+        path: "/api/socket/io",
+        addTrailingSlash: false,
+      }
+    );
+
+    socket.on("connect", () => {
+      dispatch(setIsConnected(true));
+    });
+
+    socket.on("disconnect", () => {
+      dispatch(setIsConnected(false));
+    });
+
+    dispatch(setSocket(socket));
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    socketInit();
+  }, []);
+
+  console.log(socket);
 
   const getWPS = () => {
     const lastTypedWordIndex = wordIndex.current;
@@ -90,7 +133,7 @@ export default function Home() {
     extraTypeLetter.current = 0;
     await clearInterval(intervalRef.current!);
     intervalRef.current = undefined;
-    window.gameStart = null;
+    gameStart.current = null;
     await paragraphRef.current?.classList.add("blink");
     updateCursorPosition();
     mainParagraphRef.current!.style.top = "0px";
@@ -109,7 +152,7 @@ export default function Home() {
     mainParagraphRef.current?.classList.add("gameover");
     cursorRef.current?.classList.add("hide");
     timmerRef.current!.innerHTML = getWPS() + " Wpm";
-    window.gameStart = null;
+    gameStart.current = null;
   };
 
   const generateParagraph = () => {
@@ -140,11 +183,11 @@ export default function Home() {
 
       if (!intervalRef.current && isLetter) {
         intervalRef.current = setInterval(() => {
-          if (!window.gameStart) {
-            window.gameStart = new Date().getTime();
+          if (!gameStart.current) {
+            gameStart.current = new Date().getTime();
           }
           const currentTime = new Date().getTime();
-          const msPassed = currentTime - window.gameStart;
+          const msPassed = currentTime - gameStart.current;
           const sPassed = Math.floor(msPassed / 1000);
           const sLeft = (timeRef.current * 1000) / 1000 - sPassed - 1;
           if (sLeft <= 0) {
